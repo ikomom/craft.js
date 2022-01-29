@@ -6,7 +6,7 @@ module.exports = {
     "plugin:import/typescript",
   ],
   rules: {
-    'no-console': 1,
+    'no-console': 'off',
     'import/no-unresolved': 2,
     'import/order': [
       'error',
