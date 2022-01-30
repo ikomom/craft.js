@@ -10,13 +10,13 @@ export const Toolbar = () => {
   const { active, related } = useEditor((state, query) => {
     // TODO: handle multiple selected elements
     const currentlySelectedNodeId = query.getEvent('selected').first();
+    // console.log('Toolbar collect', { query, state });
     return {
       active: currentlySelectedNodeId,
       related:
         currentlySelectedNodeId && state.nodes[currentlySelectedNodeId].related,
     };
   });
-
   return (
     <div className="py-1 h-full">
       {active && related.toolbar && React.createElement(related.toolbar)}

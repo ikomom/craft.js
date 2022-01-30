@@ -1,11 +1,13 @@
 import { Editor, Frame, Element, useNode } from '@craftjs/core';
+import { Container } from '@material-ui/core';
 import React from 'react';
 
 import { RenderNode, Viewport } from '../components/editor';
 import { Text } from '../components/selectors';
+import { Combine } from '../components/selectors/Combine';
 import Text1 from '../components/selectors/Text1';
 
-const Container = ({ children }) => {
+const Container1 = ({ children }) => {
   const {
     connectors: { connect, drag },
   } = useNode(() => {
@@ -14,13 +16,7 @@ const Container = ({ children }) => {
   });
   return (
     <div
-      ref={(dom) => {
-        const _drag = drag(dom);
-        console.log('_drag', _drag, React.isValidElement(_drag));
-        const _connect = connect(_drag);
-        console.log('_connect', _connect);
-        return _connect;
-      }}
+      ref={(dom) => connect(drag(dom))}
       style={{ border: '2px solid yellow', minHeight: 40, margin: 8 }}
     >
       {children}
@@ -31,7 +27,10 @@ const Container = ({ children }) => {
 function STest() {
   return (
     <div>
-      <Editor resolver={{ Container, Text, Text1 }} onRender={RenderNode}>
+      <Editor
+        resolver={{ Container, Container1, Combine, Text, Text1 }}
+        onRender={RenderNode}
+      >
         <Viewport>
           <Frame>
             <Element
@@ -48,7 +47,7 @@ function STest() {
               {/*>*/}
               {/*  <p>Same here</p>*/}
               {/*</Element>*/}
-              <Element is={Container} canvas>
+              <Element is={Container1} canvas>
                 <Text1 />
                 {/*<Container>*/}
                 {/*  <h2>Hi</h2>*/}

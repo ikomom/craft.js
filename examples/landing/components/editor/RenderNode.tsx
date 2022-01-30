@@ -22,10 +22,11 @@ const IndicatorDiv = styled.div`
 `;
 
 const Btn = styled.a`
-  padding: 0 0px;
+  padding: 0 0;
   opacity: 0.9;
   display: flex;
   align-items: center;
+
   > div {
     position: relative;
     top: -50%;

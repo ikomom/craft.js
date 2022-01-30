@@ -8,6 +8,7 @@ import SquareSvg from '../../../public/icons/toolbox/rectangle.svg';
 import TypeSvg from '../../../public/icons/toolbox/text.svg';
 import YoutubeSvg from '../../../public/icons/toolbox/video-line.svg';
 import { Button } from '../../selectors/Button';
+import { Combine } from '../../selectors/Combine';
 import { Container } from '../../selectors/Container';
 import { Text } from '../../selectors/Text';
 import { Video } from '../../selectors/Video';
@@ -88,6 +89,20 @@ export const Toolbox = () => {
           <Tooltip title="Video" placement="right">
             <Item className="m-2 pb-2 cursor-pointer block" move>
               <YoutubeSvg />
+            </Item>
+          </Tooltip>
+        </div>
+        <div
+          ref={(ref) =>
+            create(
+              ref,
+              <Element is={Combine} custom={{ displayName: '组合' }} />
+            )
+          }
+        >
+          <Tooltip title="组合" placement="right">
+            <Item className="m-2 pb-2 cursor-pointer block" move>
+              组合
             </Item>
           </Tooltip>
         </div>

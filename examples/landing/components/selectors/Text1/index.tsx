@@ -2,7 +2,9 @@ import { useNode } from '@craftjs/core';
 import React from 'react';
 import ContentEditable from 'react-contenteditable';
 
-const Text1 = ({ text = '默认', fontSize = 16 }) => {
+import { Text1Setting } from './Text1Setting';
+
+const Text1 = ({ text = '默认', fontSize = 16, color = '#000' }) => {
   const {
     connectors: { connect },
     actions: { setProp },
@@ -11,15 +13,13 @@ const Text1 = ({ text = '默认', fontSize = 16 }) => {
     // console.log('Text1', node.id, node.events);
     return {};
   });
-  // suppressContentEditableWarning
-  // contentEditable="true"
+  // console.log('collected', collected);
   return (
     <ContentEditable
       innerRef={connect}
-      style={{ fontSize }}
+      style={{ fontSize, color }}
       html={text}
       onChange={(event) => {
-        console.log('onChange', event.target.value);
         setProp((props) => (props.text = event.target.value), 1000);
       }}
     />
@@ -29,11 +29,16 @@ const Text1 = ({ text = '默认', fontSize = 16 }) => {
 Text1.craft = {
   props: {},
   rules: {
-    canDrop: () => true,
+    canDrop: (e) => {
+      console.log('onDrag', e);
+      return true;
+    },
     canDrag: () => true,
     canMoveIn: () => true,
     canMoveOut: () => true,
   },
-  related: {},
+  related: {
+    toolbar: Text1Setting,
+  },
 };
 export default Text1;
