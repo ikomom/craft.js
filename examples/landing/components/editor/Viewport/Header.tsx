@@ -1,5 +1,5 @@
 import { useEditor } from '@craftjs/core';
-import { Tooltip } from '@material-ui/core';
+import { Button, Tooltip } from '@material-ui/core';
 import cx from 'classnames';
 import React from 'react';
 import styled from 'styled-components';
@@ -52,11 +52,13 @@ const Item = styled.a<{ disabled?: boolean }>`
 `;
 
 export const Header = () => {
-  const { enabled, canUndo, canRedo, actions } = useEditor((state, query) => ({
-    enabled: state.options.enabled,
-    canUndo: query.history.canUndo(),
-    canRedo: query.history.canRedo(),
-  }));
+  const { enabled, canUndo, canRedo, actions, query } = useEditor(
+    (state, query) => ({
+      enabled: state.options.enabled,
+      canUndo: query.history.canUndo(),
+      canRedo: query.history.canRedo(),
+    })
+  );
 
   return (
     <HeaderDiv className="header text-white transition w-full">
@@ -73,6 +75,15 @@ export const Header = () => {
                 <RedoSvg />
               </Item>
             </Tooltip>
+            <Button
+              size={'small'}
+              onClick={() => {
+                console.log(JSON.parse(query.serialize()));
+                console.log(query.node('ROOT').toNodeTree('childNodes'));
+              }}
+            >
+              保存
+            </Button>
           </div>
         )}
         <div className="flex">
