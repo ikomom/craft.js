@@ -7,9 +7,11 @@ import React from 'react';
 import { Viewport, RenderNode } from '../components/editor';
 import { Container, Text } from '../components/selectors';
 import { Button } from '../components/selectors/Button';
+import { Combine } from '../components/selectors/Combine';
 import { Custom1, OnlyButtons } from '../components/selectors/Custom1';
 import { Custom2, Custom2VideoDrop } from '../components/selectors/Custom2';
 import { Custom3, Custom3BtnDrop } from '../components/selectors/Custom3';
+import Text1 from '../components/selectors/Text1';
 import { Video } from '../components/selectors/Video';
 
 const theme = createMuiTheme({
@@ -41,6 +43,7 @@ function App() {
           resolver={{
             Container,
             Text,
+            Text1,
             Custom1,
             Custom2,
             Custom2VideoDrop,
@@ -49,6 +52,7 @@ function App() {
             OnlyButtons,
             Button,
             Video,
+            Combine,
           }}
           enabled={false}
           onRender={RenderNode}

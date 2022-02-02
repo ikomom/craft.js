@@ -92,14 +92,7 @@ export const Toolbox = () => {
             </Item>
           </Tooltip>
         </div>
-        <div
-          ref={(ref) =>
-            create(
-              ref,
-              <Element is={Combine} custom={{ displayName: '组合' }} />
-            )
-          }
-        >
+        <div ref={(ref) => create(ref, <Element is={Combine} canvas />)}>
           <Tooltip title="组合" placement="right">
             <Item className="m-2 pb-2 cursor-pointer block" move>
               组合

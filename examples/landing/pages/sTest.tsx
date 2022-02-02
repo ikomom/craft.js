@@ -1,9 +1,8 @@
 import { Editor, Frame, Element, useNode } from '@craftjs/core';
-import { Container } from '@material-ui/core';
 import React from 'react';
 
-import { RenderNode, Viewport } from '../components/editor';
-import { Text } from '../components/selectors';
+import { RenderNode1, Viewport } from '../components/editor';
+import { Container, Text } from '../components/selectors';
 import { Combine } from '../components/selectors/Combine';
 import Text1 from '../components/selectors/Text1';
 
@@ -29,15 +28,25 @@ function STest() {
     <div>
       <Editor
         resolver={{ Container, Container1, Combine, Text, Text1 }}
-        onRender={RenderNode}
+        onRender={RenderNode1}
+        onNodesChange={() => {
+          // console.log('query', query);
+        }}
       >
         <Viewport>
           <Frame>
             <Element
               is="div"
               custom={{ displayName: 'App' }}
-              style={{ border: '2px solid green', width: 800, height: 'auto' }}
+              style={{
+                padding: 10,
+                width: 800,
+                height: 'auto',
+                backgroundColor: '#fff',
+              }}
+              canvas
             >
+              <Text1 />
               {/*<h1 className={'text-2xl'}>主标</h1>*/}
               {/*<Text1 text={'副标题'} />*/}
               {/*<Element*/}
@@ -47,12 +56,12 @@ function STest() {
               {/*>*/}
               {/*  <p>Same here</p>*/}
               {/*</Element>*/}
-              <Element is={Container1} canvas>
-                <Text1 />
-                {/*<Container>*/}
-                {/*  <h2>Hi</h2>*/}
-                {/*</Container>*/}
-              </Element>
+              {/*<Element is={Container1} canvas>*/}
+              {/*  <Text1 />*/}
+              {/*  /!*<Container>*!/*/}
+              {/*  /!*  <h2>Hi</h2>*!/*/}
+              {/*  /!*</Container>*!/*/}
+              {/*</Element>*/}
             </Element>
           </Frame>
         </Viewport>
