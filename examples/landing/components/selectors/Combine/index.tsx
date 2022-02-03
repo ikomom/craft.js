@@ -22,12 +22,13 @@ export function Combine() {
       width="100%"
       padding={['10', '10', '10', '10']}
     >
-      <Text1 text={'组合-1'} />
+      一个大西瓜
+      {/*<Text1 text={'组合-1'} />*/}
       <Element
         is={'div'}
         id={'combine-sub-text-2'}
         canvas
-        style={{ width: ' 100%' }}
+        style={{ width: ' 100%', minHeight: 80, border: '1px solid red' }}
       >
         <Text1 text={'组合-2'} />
       </Element>
@@ -37,14 +38,5 @@ export function Combine() {
 
 Combine.craft = {
   ...Container.craft,
-  rules: {
-    canDrop: (e) => {
-      console.log('onDrag', e);
-      return true;
-    },
-    canDrag: () => true,
-    canMoveIn: () => true,
-    canMoveOut: () => true,
-  },
   displayName: '组合',
 };
