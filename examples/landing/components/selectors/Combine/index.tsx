@@ -22,19 +22,29 @@ export function Combine() {
       width="100%"
       padding={['10', '10', '10', '10']}
     >
-      <Text1 text={'组合-1'} color={'#fff'} />
+      <Text1 text={'组合-1'} />
       <Element
+        is={'div'}
         id={'combine-sub-text-2'}
-        color={'red'}
-        is={Text1}
-        text={'组合-2'}
-        custom={{ displayName: '组合-文字-2' }}
-      />
+        canvas
+        style={{ width: ' 100%' }}
+      >
+        <Text1 text={'组合-2'} />
+      </Element>
     </Container>
   );
 }
 
 Combine.craft = {
   ...Container.craft,
+  rules: {
+    canDrop: (e) => {
+      console.log('onDrag', e);
+      return true;
+    },
+    canDrag: () => true,
+    canMoveIn: () => true,
+    canMoveOut: () => true,
+  },
   displayName: '组合',
 };

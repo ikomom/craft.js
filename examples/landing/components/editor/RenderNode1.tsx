@@ -1,5 +1,5 @@
-import { useEditor, useNode } from '@craftjs/core';
-import React, { useEffect, useRef } from 'react';
+import { ROOT_NODE, useEditor, useNode } from '@craftjs/core';
+import React, { useCallback, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
@@ -41,16 +41,31 @@ const getPos = (dom: HTMLElement) => {
  * @constructor
  */
 export function RenderNode1({ render }) {
-  const {
-    id,
-    connectors: { drag },
-  } = useNode();
-  const { isHover, dom, name } = useNode((node) => ({
-    isHover: node.events.hovered,
-    dom: node.dom,
-    name: node.data.custom.displayName || node.data.displayName,
-    // moveable:
+  const { id } = useNode();
+  const { actions, query, isActive } = useEditor((_, _query) => ({
+    isActive: _query.getEvent('selected').contains(id),
   }));
+  const {
+    isHover,
+    dom,
+    name,
+    moveable,
+    deletable,
+    parent,
+    connectors: { drag },
+  } = useNode((node) => {
+    const cur = query.node(node.id);
+    return {
+      isHover: node.events.hovered,
+      dom: node.dom,
+      name: node.data.custom.displayName || node.data.displayName,
+      isLinkNode: cur.isLinkedNode(),
+      moveable: cur.isDraggable(),
+      deletable: cur.isDeletable(),
+      parent: node.data.parent,
+    };
+  });
+
   const { left, top } = getPos(dom);
 
   const currentRef = useRef<HTMLDivElement>();
@@ -59,14 +74,30 @@ export function RenderNode1({ render }) {
 
   useEffect(() => {
     if (dom) {
-      if (isHover) dom.classList.add('component-selected');
+      if (isHover || isActive) dom.classList.add('component-selected');
       else dom.classList.remove('component-selected');
     }
-  }, [dom, isHover]);
+  }, [dom, isActive, isHover]);
+
+  const scroll = useCallback(() => {
+    const { current: currentDOM } = currentRef;
+    if (!currentDOM) return;
+    const { left, top } = getPos(dom);
+    currentDOM.style.top = top;
+    currentDOM.style.left = left;
+  }, [dom]);
+
+  useEffect(() => {
+    const renderContainer = document.querySelector('#craftjs-renderer');
+    renderContainer && renderContainer.addEventListener('scroll', scroll);
+    return () => {
+      renderContainer && renderContainer.removeEventListener('scroll', scroll);
+    };
+  }, [name, scroll]);
 
   return (
     <>
-      {isHover
+      {isHover || isActive
         ? // 挂载到容器下，不然会 TODO 待验证 -- 监听这个组件下所有的组件, 导致失去焦点而鬼畜
           ReactDOM.createPortal(
             <IndicatorDiv
@@ -74,19 +105,33 @@ export function RenderNode1({ render }) {
               className={'flex px-2 bg-primary text-white fixed items-center'}
               style={{ zIndex: 9999, left, top }}
             >
-              <h2 className={'flex-1 mr-2'}>{name}</h2>
-              <Btn ref={drag} className={'cursor-move mx-2'} title={'移动'}>
-                <Move />
-              </Btn>
-              <Btn
-                className={'cursor-pointer'}
-                title={'删除'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              >
-                <Delete />
-              </Btn>
+              <h2 className={'flex-1 mr-4'}>{name}</h2>
+              {moveable ? (
+                <Btn ref={drag} className={'cursor-move mr-2'}>
+                  <Move />
+                </Btn>
+              ) : null}
+              {id !== ROOT_NODE ? (
+                <Btn
+                  className={'cursor-pointer mr-2'}
+                  onClick={() => {
+                    actions.selectNode(parent);
+                  }}
+                >
+                  <ArrowUp />
+                </Btn>
+              ) : null}
+              {deletable ? (
+                <Btn
+                  className={'cursor-pointer'}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    actions.delete(id);
+                  }}
+                >
+                  <Delete />
+                </Btn>
+              ) : null}
             </IndicatorDiv>,
             document.querySelector('#page-container')
           )

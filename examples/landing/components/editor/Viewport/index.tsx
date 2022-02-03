@@ -49,6 +49,7 @@ export const Viewport: React.FC = ({ children }) => {
         >
           <Header />
           <div
+            id={'craftjs-renderer'}
             className={cx([
               'craftjs-renderer flex-1 h-full w-full transition pb-8 overflow-auto',
               {

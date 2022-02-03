@@ -19,7 +19,7 @@ export const ContainerSettings = () => {
       <ToolbarSection
         title="Colors"
         props={['background', 'color']}
-        summary={({ background, color }: any) => {
+        summary={({ background, color }) => {
           return (
             <div className="flex flex-row-reverse">
               <div

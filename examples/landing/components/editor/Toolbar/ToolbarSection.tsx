@@ -7,7 +7,7 @@ import {
   Divider,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { ReactNode } from 'react';
 const usePanelStyles = makeStyles((_) => ({
   root: {
     background: 'transparent',
@@ -37,8 +37,19 @@ const useSummaryStyles = makeStyles((_) => ({
     margin: '0px',
   },
 }));
+interface sectionProp {
+  title: React.ElementType | string;
+  props: Array<string>;
+  summary: (collect: Record<string, any>) => any;
+  children: React.ReactNode;
+}
 
-export const ToolbarSection = ({ title, props, summary, children }: any) => {
+export const ToolbarSection = ({
+  title,
+  props,
+  summary,
+  children,
+}: Partial<sectionProp>) => {
   const panelClasses = usePanelStyles({});
   const summaryClasses = useSummaryStyles({});
   const { nodeProps } = useNode((node) => ({

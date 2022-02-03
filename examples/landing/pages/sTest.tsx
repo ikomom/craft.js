@@ -36,17 +36,14 @@ function STest() {
         <Viewport>
           <Frame>
             <Element
-              is="div"
+              is={Container}
+              width={'800px'}
+              height={'600px'}
               custom={{ displayName: 'App' }}
-              style={{
-                padding: 10,
-                width: 800,
-                height: 'auto',
-                backgroundColor: '#fff',
-              }}
               canvas
             >
               <Text1 />
+              <Text text={'喜喜喜喜喜喜喜喜喜喜事实上'} />
               {/*<h1 className={'text-2xl'}>主标</h1>*/}
               {/*<Text1 text={'副标题'} />*/}
               {/*<Element*/}
