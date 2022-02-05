@@ -79,7 +79,6 @@ export const Header = () => {
               size={'small'}
               onClick={() => {
                 console.log(JSON.parse(query.serialize()));
-                console.log(query.node('ROOT').toNodeTree('childNodes'));
               }}
             >
               保存

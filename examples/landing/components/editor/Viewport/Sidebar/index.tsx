@@ -35,17 +35,17 @@ export const Sidebar = () => {
         >
           <Toolbar />
         </SidebarItem>
-        <SidebarItem
-          icon={LayerIcon}
-          title="Layers"
-          height={!toolbarVisible ? 'full' : '45%'}
-          visible={layersVisible}
-          onChange={(val) => setLayerVisible(val)}
-        >
-          <div className="">
-            <Layers expandRootOnLoad={true} />
-          </div>
-        </SidebarItem>
+        {/*<SidebarItem*/}
+        {/*  icon={LayerIcon}*/}
+        {/*  title="Layers"*/}
+        {/*  height={!toolbarVisible ? 'full' : '45%'}*/}
+        {/*  visible={layersVisible}*/}
+        {/*  onChange={(val) => setLayerVisible(val)}*/}
+        {/*>*/}
+        {/*  <div className="">*/}
+        {/*    <Layers expandRootOnLoad={true} />*/}
+        {/*  </div>*/}
+        {/*</SidebarItem>*/}
       </div>
     </SidebarDiv>
   );

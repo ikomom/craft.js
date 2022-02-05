@@ -1,4 +1,8 @@
-import produce, { PatchListener, produceWithPatches } from 'immer';
+import produce, {
+  PatchListener,
+  produceWithPatches,
+  enablePatches,
+} from 'immer';
 import { Reducer, useMemo, useReducer, useRef } from 'react';
 
 import { History, HISTORY_ACTIONS } from './History';
@@ -10,30 +14,23 @@ import {
   MethodsOrOptions,
   StateAndCallbacksFor,
 } from './useMethods';
-//
-// type MethodsRecordBase<S = any> = Record<
-//   string,
-//   (...args: any[]) => S extends object ? S | void : S
-// >;
-// type ActionUnion<R extends MethodsRecordBase> = {
-//   [T in keyof R]: { type: T; payload: Parameters<R[T]> };
-// }[keyof R];
-//
-// type Methods<S = any, R extends MethodsRecordBase<S> = any> = (state: S) => R;
-//
+
+enablePatches();
+
 /**
  * useMethod 强行凑类型， 搞不懂
  * @param methodOrOptions
  * @param initialState
+ * @param queryMethods
  */
 export const useMethod1 = <S, R extends MethodRecordBase<S>>(
-  methodOrOptions: MethodsOrOptions,
-  initialState: any
-  // queryMethods?
+  methodOrOptions: MethodsOrOptions<S, R>,
+  initialState: S,
+  queryMethods?: any
 ): StateAndCallbacksFor<MethodsOrOptions<S, R>> => {
   // const normalizeHistoryRef = useRef<any>();
   const history = useMemo(() => new History(), []);
-
+  console.log('queryMethods', queryMethods);
   const [reducer, methodsFactory] = useMemo<
     [Reducer<S, ActionUnion<R>>, Methods<S, R>]
   >(() => {

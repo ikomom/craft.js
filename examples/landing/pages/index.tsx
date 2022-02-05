@@ -56,6 +56,9 @@ function App() {
           }}
           enabled={false}
           onRender={RenderNode}
+          onNodesChange={() => {
+            // console.log('query', query);
+          }}
         >
           <Viewport>
             <Frame>
