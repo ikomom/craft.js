@@ -1,10 +1,12 @@
 import { Button } from '@material-ui/core';
+import { Patch } from 'immer';
 import React from 'react';
 
-import useMethods from '../../craft/utils/useMethods';
+import { useMethod1 } from '../../craft/utils/useMethod1';
+// import useMethods from '../../craft/utils/useMethods';
 
 export default function TestUseMethods() {
-  const [{ count }, { reset, increment, decrement }] = useMethods(
+  const [{ count }, { reset, increment, decrement }] = useMethod1(
     methods,
     initialState
   );
@@ -24,7 +26,9 @@ export default function TestUseMethods() {
   );
 }
 
-const initialState = { count: 0 };
+const initialState = { count: 0, test: 1 };
+const patchList: Patch[] = [];
+const inverseList: Patch[] = [];
 
 const methods = (state) => ({
   reset() {
